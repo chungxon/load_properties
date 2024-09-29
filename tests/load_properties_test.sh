@@ -165,3 +165,27 @@ if [ "${X}" != "lastLine with no new line!" ]; then
     exit 1
 fi
 echo "${green}✅ Properties loaded successfully!${none}"
+
+#=============================================================================#
+# Load special properties from example.props file
+echo "Load special properties from example.props..."
+loadProperties examples/example.props
+
+# echo "x='${x}'"
+# echo "y='${y}'"
+# echo "z='${z}'"
+
+# Test loading props file
+if [ "${x}" != "Tên app" ]; then
+    echo "${red}Error: Property 'x' is not 'Tên app'!${none}"
+    exit 1
+fi
+if [ "${y}" != "قيمة" ]; then
+    echo "${red}Error: Property 'y' is not 'قيمة'!${none}"
+    exit 1
+fi
+if [ "${z}" != "🙂" ]; then
+    echo "${red}Error: Property 'z' is not '🙂'!${none}"
+    exit 1
+fi
+echo "${green}✅ Special properties loaded successfully!${none}"
