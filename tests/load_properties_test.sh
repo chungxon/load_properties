@@ -8,6 +8,12 @@ none=$(tput sgr0)
 # Include the script
 . scripts/load_properties.sh
 
+# # Download the script
+# curl -s https://raw.githubusercontent.com/chungxon/load_properties/refs/heads/master/scripts/load_properties.sh -o /tmp/load_properties.sh
+
+# # Source the downloaded script
+# source /tmp/load_properties.sh
+
 #=============================================================================#
 # Load properties from example.properties with prefix
 echo "Load properties from example.properties with prefix..."

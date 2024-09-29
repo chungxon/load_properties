@@ -8,6 +8,12 @@ none=$(tput sgr0)
 # Include the script
 . scripts/get_property.sh
 
+# # Download the script
+# curl -s https://raw.githubusercontent.com/chungxon/load_properties/refs/heads/master/scripts/get_property.sh -o /tmp/get_property.sh
+
+# # Source the downloaded script
+# source /tmp/get_property.sh
+
 #=============================================================================#
 # Load property from example.properties
 echo "Load property from example.properties..."
