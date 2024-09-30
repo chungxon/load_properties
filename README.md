@@ -20,3 +20,7 @@ This helpful script is used to read properties from a file for use in another sc
     ```
 - Example usage: appName=$(getProperty examples/example.properties appName)
 - Example accessing the property: echo "App Name: $appName"
+
+# Demo
+
+![image](https://github.com/user-attachments/assets/4b641531-f7af-41cd-a455-3ffe892edd04)
