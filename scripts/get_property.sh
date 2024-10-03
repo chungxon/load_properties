@@ -14,13 +14,18 @@
 function getProperty() {
   local fileName=$1
   local paramKey=$2
+  local separator=$3
 
   if [ ! -f "${fileName}" ]; then
     echo "File ${fileName} not found!"
     return 1
   fi
 
-  while IFS='=' read -r key value || [ -n "$key" ]; do
+  if [ -z "${separator}" ]; then
+    separator="="
+  fi
+
+  while IFS="${separator}" read -r key value || [ -n "$key" ]; do
     # Skip empty lines and comments
     if [[ -z "${key}" || "${key}" == "#"* ]]; then
       continue
@@ -28,6 +33,7 @@ function getProperty() {
 
     # Trim leading/trailing spaces without using xargs (which alters special characters)
     # key=$(echo "$key" | xargs)
+
     key=$(echo "$key" | sed 's/^[ \t]*//;s/[ \t]*$//')
 
     # If the key matches the requested parameter, print the value and exit
@@ -43,22 +49,26 @@ function getProperty() {
   return 2
 }
 
-
-# This solution will be slow when reading lots of properties
+# # This solution will be slow when reading lots of properties
 # function getProperty() {
 #   local fileName=$1
 #   local paramKey=$2
+#   local separator=$3
 
 #   if [ ! -f "${fileName}" ]; then
 #     echo "File ${fileName} not found!"
 #     return 1
 #   fi
 
+#   if [ -z "${separator}" ]; then
+#     separator="="
+#   fi
+
 #   # # Use grep to find the first line with the key, and cut to extract the value
-#   # local value=$(grep "^${paramKey}=" "${fileName}" | head -n 1 | cut -d'=' -f2)
+#   # local value=$(grep "^${paramKey}${separator}" "${fileName}" | head -n 1 | cut -d'${separator}' -f2)
 
 #   # Use grep to find the first line with the key, and cut from the first occurrence of the equal sign
-#   local value=$(grep "^${paramKey}=" "${fileName}" | head -n 1 | sed 's/^[^=]*=//')
+#   local value=$(grep "^${paramKey}${separator}" "${fileName}" | head -n 1 | sed "s/^[^${separator}]*${separator}//")
 
 #   if [ -z "${value}" ]; then
 #     # echo "Parameter ${paramKey} not found in file ${fileName}."

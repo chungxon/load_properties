@@ -14,14 +14,19 @@
 function loadProperties() {
   local fileName=$1
   local prefixKey=$2
+  local separator=$3
 
   if [ ! -f "${fileName}" ]; then
     echo "File ${fileName} not found!"
     return 1
   fi
 
+  if [ -z "${separator}" ]; then
+    separator="="
+  fi
+
   # Read the file line by line. Inclue the last line with no new line
-  while IFS='=' read -r origKey value || [ -n "$origKey" ]; do
+  while IFS="${separator}" read -r origKey value || [ -n "$origKey" ]; do
     # Skip empty lines and comments
     if [[ -z "${origKey}" || "${origKey}" == "#"* ]]; then
       continue
