@@ -41,6 +41,16 @@ function loadProperties() {
     local key=${origKey}
     key=${key//[!a-zA-Z0-9_]/_}
 
+    # Remove any inline comments from the value
+    # Preserve everything up to the first # as the value, unless it's inside quotes
+    if [[ "${value}" =~ ^[\'\"](.*)[\'\"]$ ]]; then
+      # If value is quoted, remove surrounding quotes only
+      value=$(echo "${BASH_REMATCH[1]}")
+    else
+      # Strip out the inline comment that starts with #, but preserve part before #
+      value=$(echo "$value" | sed 's/[ \t]* #.*//')
+    fi
+
     if [[ "${trimValue}" == "true" ]]; then
       value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
     fi

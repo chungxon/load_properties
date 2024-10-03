@@ -41,6 +41,16 @@ function getProperty() {
 
     key=$(echo "$key" | sed 's/^[ \t]*//;s/[ \t]*$//')
 
+    # Remove any inline comments from the value
+    # Preserve everything up to the first # as the value, unless it's inside quotes
+    if [[ "${value}" =~ ^[\'\"](.*)[\'\"]$ ]]; then
+      # If value is quoted, remove surrounding quotes only
+      value=$(echo "${BASH_REMATCH[1]}")
+    else
+      # Strip out the inline comment that starts with #, but preserve part before #
+      value=$(echo "$value" | sed 's/[ \t]* #.*//')
+    fi
+
     if [[ "${trimValue}" == "true" ]]; then
       value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
     fi
@@ -83,6 +93,16 @@ function getProperty() {
 
 #   # Use grep to find the first line with the key, and cut from the first occurrence of the equal sign
 #   local value=$(grep "^${paramKey}${separator}" "${fileName}" | head -n 1 | sed "s/^[^${separator}]*${separator}//")
+
+#   # Remove any inline comments from the value
+#   # Preserve everything up to the first # as the value, unless it's inside quotes
+#   if [[ "${value}" =~ ^[\'\"](.*)[\'\"]$ ]]; then
+#     # If value is quoted, remove surrounding quotes only
+#     value=$(echo "${BASH_REMATCH[1]}")
+#   else
+#     # Strip out the inline comment that starts with #, but preserve part before #
+#     value=$(echo "$value" | sed 's/[ \t]* #.*//')
+#   fi
 
 #   if [[ "${trimValue}" == "true" ]]; then
 #     value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
