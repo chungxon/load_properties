@@ -15,6 +15,7 @@ function loadProperties() {
   local fileName=$1
   local prefixKey=$2
   local separator=$3
+  local trimValue=$4 # Bolean to trim value
 
   if [ ! -f "${fileName}" ]; then
     echo "File ${fileName} not found!"
@@ -23,6 +24,10 @@ function loadProperties() {
 
   if [ -z "${separator}" ]; then
     separator="="
+  fi
+
+  if [ -z "${trimValue}" ]; then
+    trimValue="false"
   fi
 
   # Read the file line by line. Inclue the last line with no new line
@@ -35,6 +40,10 @@ function loadProperties() {
     # Clean up key: replace invalid characters with underscores
     local key=${origKey}
     key=${key//[!a-zA-Z0-9_]/_}
+
+    if [[ "${trimValue}" == "true" ]]; then
+      value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
+    fi
 
     # Ensure keys starting with digits are prefixed with '_'
     if [[ "${prefixKey}${key}" =~ ^[0-9].* ]]; then

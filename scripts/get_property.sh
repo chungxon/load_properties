@@ -15,6 +15,7 @@ function getProperty() {
   local fileName=$1
   local paramKey=$2
   local separator=$3
+  local trimValue=$4 # Bolean to trim value
 
   if [ ! -f "${fileName}" ]; then
     echo "File ${fileName} not found!"
@@ -25,16 +26,24 @@ function getProperty() {
     separator="="
   fi
 
+  if [ -z "${trimValue}" ]; then
+    trimValue="false"
+  fi
+
   while IFS="${separator}" read -r key value || [ -n "$key" ]; do
     # Skip empty lines and comments
     if [[ -z "${key}" || "${key}" == "#"* ]]; then
       continue
     fi
 
-    # Trim leading/trailing spaces without using xargs (which alters special characters)
+    # # Trim leading/trailing spaces without using xargs (which alters special characters)
     # key=$(echo "$key" | xargs)
 
     key=$(echo "$key" | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+    if [[ "${trimValue}" == "true" ]]; then
+      value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
+    fi
 
     # If the key matches the requested parameter, print the value and exit
     if [[ "${key}" == "${paramKey}" ]]; then
@@ -54,6 +63,7 @@ function getProperty() {
 #   local fileName=$1
 #   local paramKey=$2
 #   local separator=$3
+#   local trimValue=$4 # Bolean to trim value
 
 #   if [ ! -f "${fileName}" ]; then
 #     echo "File ${fileName} not found!"
@@ -64,11 +74,19 @@ function getProperty() {
 #     separator="="
 #   fi
 
+#   if [ -z "${trimValue}" ]; then
+#     trimValue="false"
+#   fi
+
 #   # # Use grep to find the first line with the key, and cut to extract the value
 #   # local value=$(grep "^${paramKey}${separator}" "${fileName}" | head -n 1 | cut -d'${separator}' -f2)
 
 #   # Use grep to find the first line with the key, and cut from the first occurrence of the equal sign
 #   local value=$(grep "^${paramKey}${separator}" "${fileName}" | head -n 1 | sed "s/^[^${separator}]*${separator}//")
+
+#   if [[ "${trimValue}" == "true" ]]; then
+#     value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
+#   fi
 
 #   if [ -z "${value}" ]; then
 #     # echo "Parameter ${paramKey} not found in file ${fileName}."
