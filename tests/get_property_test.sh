@@ -105,3 +105,35 @@ if [ "${X}" != "lastLine with no new line!" ]; then
     exit 1
 fi
 echo "${green}✅ Properties loaded successfully!${none}"
+
+#=============================================================================#
+# Load property from example.yaml
+echo "Load property from example.yaml..."
+name=$(getProperty examples/example.yaml name ":" true)
+description=$(getProperty examples/example.yaml description ":" true)
+publish_to=$(getProperty examples/example.yaml publish_to ":" true)
+version=$(getProperty examples/example.yaml version ":" true)
+
+# echo "name='${name}'"
+# echo "description='${description}'"
+# echo "publish_to='${publish_to}'"
+# echo "version='${version}'"
+
+# Test loading property
+if [ "${name}" != "example" ]; then
+    echo "${red}Error: Property 'name' is not 'example'!${none}"
+    exit 1
+fi
+if [ "${description}" != '"A new Flutter project."' ]; then
+    echo "${red}Error: Property 'description' is not '\"A new Flutter project.\"'!${none}"
+    exit 1
+fi
+if [ "${publish_to}" != "'none'" ]; then
+    echo "${red}Error: Property 'publish_to' is not ''none''!${none}"
+    exit 1
+fi
+if [ "${version}" != "1.0.0+1" ]; then
+    echo "${red}Error: Property 'b' is not '1.0.0+1"${none}!
+    exit 1
+fi
+echo "${green}✅ Properties loaded successfully!${none}"
