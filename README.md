@@ -9,8 +9,8 @@ This helpful script is used to read properties from a file for use in another sc
     ```bash
     loadProperties "$1" "$2"
     ```
-- Example usage: loadProperties examples/example.properties
-- Example accessing the properties: echo "App Name: $appName"
+- Example usage: `loadProperties examples/example.properties`
+- Example accessing the properties: `echo "App Name: $appName"`
 
 ## 2. `getProperty` function
 - Call the function with the properties file and the property key
@@ -18,8 +18,8 @@ This helpful script is used to read properties from a file for use in another sc
     ```bash
     getProperty "$1" "$2"
     ```
-- Example usage: appName=$(getProperty examples/example.properties appName)
-- Example accessing the property: echo "App Name: $appName"
+- Example usage: `appName=$(getProperty examples/example.properties appName)`
+- Example accessing the property: `echo "App Name: $appName"`
 
 # Demo
 
