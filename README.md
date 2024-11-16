@@ -4,13 +4,14 @@ This helpful script is used to read properties from a file for use in another sc
 # Usage
 
 ## 1. `loadProperties` function
-- Call the function with the properties file and an optional prefix
+- Call the function with the properties file and an optional prefix to load all properties into variables
+- The prefix will be prepended to all variable names to avoid naming conflicts
 
     ```bash
-    loadProperties "$1" "$2"
+    loadProperties <file> [prefix]
     ```
-- Example usage: `loadProperties examples/example.properties`
-- Example accessing the properties: `echo "App Name: $appName"`
+- Example usage: `loadProperties examples/example.properties "app_"`
+- Example accessing the properties: `echo "App Name: $app_appName"`
 
 ## 2. `getProperty` function
 - Call the function with the properties file and the property key
