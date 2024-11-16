@@ -14,13 +14,14 @@ This helpful script is used to read properties from a file for use in another sc
 - Example accessing the properties: `echo "App Name: $app_appName"`
 
 ## 2. `getProperty` function
-- Call the function with the properties file and the property key
+- Call the function with the properties file and property key to get a single property value
+- Optional parameters for separator (default "=") and whether to trim whitespace (default false)
 
     ```bash
-    getProperty "$1" "$2"
+    getProperty <file> <key> [separator] [trim_value]
     ```
 - Example usage: `appName=$(getProperty examples/example.properties appName)`
-- Example accessing the property: `echo "App Name: $appName"`
+- Example with options: `value=$(getProperty config.ini key ":" true)`
 
 # Demo
 
